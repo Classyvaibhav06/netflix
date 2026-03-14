@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import connectDB from "@/lib/mongoose"
 import Movie from "@/models/Movie"
 
+export const dynamic = "force-dynamic"
+
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
     await connectDB()

@@ -3,6 +3,8 @@ import connectDB from "@/lib/mongoose"
 import Watchlist from "@/models/Watchlist"
 import { auth } from "@/auth"
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   try {
     const session = await auth()
