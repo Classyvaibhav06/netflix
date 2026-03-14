@@ -95,47 +95,35 @@ export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenM
 
       {/* Content */}
       <div
-        className={`absolute bottom-[35%] md:bottom-[30%] left-4 md:left-[60px] w-[90%] md:w-[45%] lg:w-[36%] space-y-4 z-10 transition-all duration-700 ${
-          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        className={`absolute bottom-[25%] md:bottom-[20%] left-4 md:left-[60px] w-[90%] md:w-[45%] lg:w-[40%] space-y-6 z-30 transition-all duration-1000 ${
+          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        {/* Netflix "N" Series/Film badge */}
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-[#E50914] font-bold text-lg tracking-[0.15em]">N</span>
-          <span className="text-[#999] text-xs font-semibold tracking-[0.3em] uppercase">F I L M</span>
+        {/* Cinematic Logo Badge */}
+        <div className="flex items-center gap-2 animate-pulse-slow">
+          <div className="w-6 h-10 bg-[#E50914] flex items-center justify-center font-bold text-white text-xl shadow-[0_0_15px_rgba(229,9,20,0.4)]">
+            N
+          </div>
+          <span className="text-white/70 text-xs font-bold tracking-[0.4em] uppercase">S E R I E S</span>
         </div>
 
-        {/* Title */}
-        <h1 className="font-bebas text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] text-white leading-[0.9] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] tracking-wide">
+        {/* Cinematic Title */}
+        <h1 className="text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold text-white leading-[0.8] drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] tracking-tighter uppercase italic">
           {movie.title}
         </h1>
 
-        {/* Meta info */}
-        <div className="flex items-center gap-3 text-sm">
-          <span className="match-score">98% Match</span>
-          <span className="text-[#bcbcbc]">{movie.releaseYear}</span>
-          <span className="maturity-badge">{movie.maturityRating}</span>
-          <span className="text-[#bcbcbc]">{movie.duration}</span>
-          <span className="border border-white/30 px-1.5 text-[10px] text-[#bcbcbc] tracking-wide">HD</span>
-        </div>
-
-        {/* Description */}
-        <p className="text-[#d2d2d2] text-sm md:text-base leading-relaxed line-clamp-3 drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-          {movie.description}
-        </p>
-
         {/* Action buttons */}
-        <div className="flex items-center gap-2 md:gap-3 pt-1">
-          <button className="btn-play px-5 md:px-8 py-1.5 md:py-2.5 text-sm md:text-base">
-            <Play className="w-5 h-5 md:w-6 md:h-6 fill-black" />
-            <span className="ml-1">Play</span>
+        <div className="flex items-center gap-3 pt-4">
+          <button className="flex items-center justify-center gap-3 px-8 py-3 bg-white text-black font-bold text-xl rounded hover:bg-white/80 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl">
+            <Play className="w-8 h-8 fill-black" />
+            Play
           </button>
           <button
             onClick={() => onOpenModal?.(movie)}
-            className="btn-more-info px-4 md:px-7 py-1.5 md:py-2.5 text-sm md:text-base"
+            className="flex items-center justify-center gap-3 px-8 py-3 bg-white/20 text-white font-bold text-xl rounded backdrop-blur-md hover:bg-white/30 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl border border-white/10"
           >
-            <Info className="w-5 h-5 md:w-6 md:h-6" />
-            <span className="ml-1">More Info</span>
+            <Info className="w-8 h-8" />
+            More Info
           </button>
         </div>
       </div>

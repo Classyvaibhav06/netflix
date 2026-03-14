@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e41123",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#181818",
+                        "surface-dark": "#232323",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "4px",
+                        "lg": "8px",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .scrim-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .hero-gradient {
+            background: linear-gradient(0deg, #181818 0%, rgba(24, 24, 24, 0.7) 20%, rgba(24, 24, 24, 0) 50%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-black text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="scrim-overlay fixed inset-0 z-50 flex items-start justify-center overflow-y-auto pt-8 pb-8 px-4">
+<div class="relative w-full max-w-[950px] bg-background-light dark:bg-background-dark rounded-lg overflow-hidden shadow-2xl">
+<button class="absolute right-4 top-4 z-[60] flex items-center justify-center size-10 rounded-full bg-background-dark/60 text-white hover:bg-background-dark/80 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="relative w-full aspect-video bg-cover bg-center" data-alt="Cinematic wide shot of a futuristic cityscape at night" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAsSB4VOSqg0WPeNLV-_w0oGSUbwox-M3Tly2C0fatIojDypYXcuzJLb77qz4gaMGp7AEqYFKzL7i0sgX7n2BV7tX9tQvl_SUrrPb2GcGAWqUbXyZF6n-gwq9mznRG5dwdjg-l70Tg_2GOgenbsO8CgedEHpFUKwQ0OTOWrSDfqjZM48EThjyzuARgQnOyxpHNhR0ZhkUMOvpu7K8GV9kpWq3JR1CDbfuBQLcgaos53s_fHwvssWWqYMNadcaMvblq7PTY_ugeO0ryE');">
+<div class="absolute inset-0 hero-gradient"></div>
+<div class="absolute bottom-0 left-0 w-full p-12">
+<div class="mb-8 max-w-md">
+<h1 class="text-5xl font-bold tracking-tight text-white drop-shadow-lg">STARK HORIZON</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center gap-2 px-8 py-2 bg-white text-black font-bold text-lg rounded hover:bg-white/90 transition-transform hover:scale-105">
+<span class="material-symbols-outlined filled text-3xl">play_arrow</span>
+                            Play
+                        </button>
+<button class="flex items-center justify-center size-10 rounded-full border-2 border-slate-400 bg-background-dark/40 text-white hover:border-white transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full border-2 border-slate-400 bg-background-dark/40 text-white hover:border-white transition-colors">
+<span class="material-symbols-outlined">thumb_up</span>
+</button>
+</div>
+</div>
+</div>
+<div class="px-12 py-8 grid grid-cols-12 gap-12">
+<div class="col-span-8 space-y-6">
+<div class="flex items-center gap-2 text-sm font-medium">
+<span class="text-green-500">98% Match</span>
+<span class="text-slate-400">2024</span>
+<span class="px-1.5 py-0.5 border border-slate-500 text-[10px] rounded-sm text-slate-300">TV-MA</span>
+<span class="text-slate-400">2h 15m</span>
+<span class="px-1 border border-slate-500 text-[8px] rounded-sm text-slate-300">HD</span>
+<span class="px-1 border border-slate-500 text-[8px] rounded-sm text-slate-300">4K</span>
+</div>
+<p class="text-lg leading-relaxed text-slate-200">
+                        In a near-future metropolis where memories can be traded as currency, a disgraced detective uncovers a conspiracy that threatens the very fabric of human identity. Forced to confront his own forgotten past, he must race against time before his existence is permanently erased.
+                    </p>
+</div>
+<div class="col-span-4 space-y-4 text-sm">
+<div>
+<span class="text-slate-500">Cast:</span>
+<span class="text-slate-200">Julianne Moore, Oscar Isaac, Steven Yeun, more</span>
+</div>
+<div>
+<span class="text-slate-500">Genres:</span>
+<span class="text-slate-200">Sci-Fi Movies, Thrillers, Action &amp; Adventure</span>
+</div>
+<div>
+<span class="text-slate-500">This movie is:</span>
+<span class="text-slate-200">Mind-bending, Gritty, Suspenseful</span>
+</div>
+</div>
+</div>
+<div class="px-12 pb-12">
+<h3 class="text-2xl font-bold mb-6">More Like This</h3>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="Futuristic neon city lights at night" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxXKYTv9y6flwGgQ6VDkRPI4K45hgHr0vxl_zCBwABqVd12f40GoRagT9fyUoV2QFKBwFyOZewtufltu9fkbCdftqcjyksLyrlzv2aFyNjmsS480qmZ1HFAcTKDp9rvOCkH9yTBj5htHTFNNpMCbrYyowmWDolCexo9E-2RIafGN_OYVrfez0iezPURYuZ1QyHBU8RW8re6v6QYn6pmCad5LQguG0ONDx7t4YzXzJzOV5Dvm187QJ_Ypo3opOrQ5ZVlgBdzKU2gPzI');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">95% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">A journey through a digital wasteland where the lines between code and consciousness blur into an neon-drenched reality.</p>
+</div>
+</div>
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="Abstract cinematic lighting and silhouettes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiOgKlMw0DkjsqQa5UzYXwdyA3Y83aB-4126mPJKlIjkmJ3pAndqPdJqXIEhE6mhn9LBAgXKu9LMDO38blG8D7uqiZUbAQ_vZCwG7Mk1LtJUDij3xWww49UnTFf6rbpmjRK4xmX4KXW7Wn5xuAoVSAFLsDe9zHgCn7N5G_q0Ss8rCO19XBWAjH1geNQ8x-ERUQr9_DtMmam7EvTcuEfyxKAcjrqGUb-9flIbLzDyG95FwHEwoechT0DeSUMRRl9XnyjJhl_ctnhETF');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">92% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">An introspective look at the final hours of Earth's last colony before they embark on an uncertain voyage to the stars.</p>
+</div>
+</div>
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="High speed train moving through a tunnel" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWK2Ce1Y8br1RcBFjlySYOfQdPi4rxV7YzxblhPMb79juKKyqDnaHINMmn0adOjuLHhNaNn0d77A97F6VCF9eUriJpvI5Mpe0dd6ukyYpaljK46T2RfZNoVEgyujKcNXFH3UjpFHP46rfn_8aLN27LAu5scErLFE8HAQRcm7iuFI9-GCVxrCxqsLbBJc-LPnx0LwksJWlyHUzbCPj6a6XKvZMwXhEv3EhUxNrs35Pa-pJ-wkSfxQDmUYmDyRi-BcWqFtI47EhzQahO');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">89% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">High-stakes espionage on a maglev train hurtling across a fractured Europe in the year 2088.</p>
+</div>
+</div>
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="Satellite view of earth at night" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0qd4dSG4QIupRuEAy61_KO2-weBjGboKNPLYXntTakwSPXIvnD9qhjL_5CbkeAYI0tkw_SWulOWFRdY4Y3crHXyIKF412v8PjATDcDUwac7lS0Irp2qpV5wVlXh9njOPR_N5aksBKm2uJEfd4vz3QUnIxPCs6sUiYYX4S_0ht_74tAvCuJqRuoM8B17q-E7IZtD0hf9pDPYiVdWWeWinzNP3EtERhEAN1KcvrsqlihSd7HDkQg8bFmXW3Iv3lbJXwmtSMFkwd-t-5');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">97% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">The untold story of the pioneers who built the first orbital habitat amidst a global resource crisis.</p>
+</div>
+</div>
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="Digital network mesh pattern background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwmajpGbhrCl2_ghAk5GnjSe_9EOQACojoDCaBOor1or8RM9czKPhpPOkS2RBkER2KADUx38XYR7iyr4vg_6ttEOHlkDc3EBzL4Vei1nf56HCmbx4jJ67B6DEr6AGljYe50lTzWsOeSHcDtBdqz3zZ7gxzGX39uZF9pXTzuE9F8f_ijzCoP49NnMA-gxG__dUYIcb58o-RKxRJp8osb5y-kS07Fm5srGxeh3kS8Nbh8AFHoAXON8i4VynZdPpFaQNK1XUOAsnBUSWP');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">94% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">An AI system develops a conscience and begins sabotaging the corporation that created it from within.</p>
+</div>
+</div>
+<div class="bg-surface-dark rounded-md overflow-hidden flex flex-col group cursor-pointer">
+<div class="aspect-video bg-cover bg-center" data-alt="Dark mysterious forest with fog" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGx0fstKCPKceo4zhtcgiNOcj_5VxK17fEst1AVLh364bBNoZnFDB9JbUefKZNQaLf8gwhOnqBv95_kskzhK8RZhivU_AckHtyLJ3dmPxDdhGYEpveiqk8nCnvfBFB4Akx5DQm_3ULiGT-IxWKYYJmS1b_B1zJGsW3FFi2_Ltvg6kQWA6GNS-aDFzG0FrxSKlMVH7jU4qPxEL74w-BXMFaJ5eccyRyf65xoXkSJLuWPEEMdRozeB1N1jST3G_ZAx-3IFDKt2QRr4jz');"></div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<span class="text-green-500 text-sm font-bold">91% Match</span>
+<button class="size-8 rounded-full border border-slate-500 flex items-center justify-center hover:border-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<p class="text-xs text-slate-400 line-clamp-3">Deep in the synthetic forests of New Seattle, a hunter tracks a rogue android seeking its own origin.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-12 pb-20 border-t border-slate-800 pt-8">
+<h3 class="text-2xl font-bold mb-6 uppercase tracking-wider text-slate-400">About <span class="text-white">Stark Horizon</span></h3>
+<div class="space-y-4 text-sm max-w-2xl">
+<div class="flex gap-2">
+<span class="text-slate-500 min-w-24">Director:</span>
+<span class="text-slate-200">Denis Villeneuve</span>
+</div>
+<div class="flex gap-2">
+<span class="text-slate-500 min-w-24">Cast:</span>
+<span class="text-slate-200 leading-relaxed">Julianne Moore, Oscar Isaac, Steven Yeun, Florence Pugh, Mahershala Ali, Lakeith Stanfield, Ana de Armas</span>
+</div>
+<div class="flex gap-2">
+<span class="text-slate-500 min-w-24">Writer:</span>
+<span class="text-slate-200">Alex Garland</span>
+</div>
+<div class="flex gap-2">
+<span class="text-slate-500 min-w-24">Maturity Rating:</span>
+<span class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 border border-slate-500 text-[10px] rounded-sm text-slate-300">TV-MA</span>
+<span class="text-slate-200">Recommended for mature audiences. May contain strong language and violence.</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

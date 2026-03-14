@@ -38,3 +38,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to toggle watchlist" }, { status: 500 })
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await auth()
+    if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+    const { movieId } = await req.json()
+    await connectDB()
+
+    await Watchlist.deleteOne({ userId: session.user.id, movieId })
+    return NextResponse.json({ message: "Removed from watchlist" })
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to remove from watchlist" }, { status: 500 })
+  }
+}

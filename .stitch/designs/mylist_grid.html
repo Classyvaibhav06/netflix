@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My List - Netflix Clone</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e41123",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#000000",
+                        "card-dark": "#141414",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .poster-hover-zoom:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .glass-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative min-h-screen flex flex-col">
+<!-- Sticky Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-4 md:px-12 py-4 bg-gradient-to-b from-black/80 to-transparent transition-colors duration-300">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-4xl font-bold">movie_filter</span>
+<h2 class="text-2xl font-black tracking-tighter uppercase italic">Netflix</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">TV Shows</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">Movies</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">New &amp; Popular</a>
+<div class="relative py-1">
+<a class="text-white text-sm font-bold transition-colors" href="#">My List</a>
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>
+</div>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="bg-black/40 border border-slate-700 text-white text-sm rounded-none pl-10 pr-4 py-1.5 focus:ring-1 focus:ring-primary focus:border-primary w-64" placeholder="Titles, people, genres" type="text"/>
+</div>
+<button class="text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-xs font-bold text-white overflow-hidden shadow-lg" data-alt="User profile avatar icon">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="User profile avatar color block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD4T4An8j9ebFayskZ9kFckHAv4oEXiVM_8fsMzYBOiizsLZERsTxoTUI8pKAjWjBQhuEHUhqHtMbhZ6a3_bM_kfEbtNO5vSzwoIO4tcpcaNz09qDUBWr9gT6Gsp568XrmNItm-BA4AQI4bys33J9kQbbR0lszPvfva6uehORZUMUiwx0x1apE3wjBxPuNn-uQdZIuewW5WqS7nPCXYB0CxK7WGqA6zmA5Hjdw1lKOEPgKYHeJTf3Gae0wak6Rqadev1ehEJdfCeM3"/>
+</div>
+</div>
+</header>
+<main class="flex-grow px-4 md:px-12 py-8">
+<!-- Hero Title -->
+<div class="mb-10">
+<h1 class="text-3xl md:text-4xl font-bold text-white mb-2">My List</h1>
+<div class="w-24 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-10">
+<!-- Card Component -->
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dark dramatic movie poster for Stranger Things" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEGJkt8hhWZSk_obIWV9jJ124Sp7uCZGAjhsyiYPXfe0sDcykgNwvLOwBX99QnSs7VuI1zO8NuqpWtC2WJir4h2vY1lKHkyhDuaoVuRfU79wjKCHtfajpvTAyP1fbTaLKsdQ0gB5fuBhkoALbnl04SVDuh47WoljNd0KOd7mj195-cSVBo7yy9kt8bsF8jhza-g8eayhUjnLlYLjNl6jF9ZJvzCEB50dAGtXYrVJ3oVoS7UCS1nK-eoyaBsSb3PoC2j4LZuUnHZtky');"></div>
+<!-- Top Right Remove Icon -->
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<div class="flex gap-2 mb-2">
+<button class="size-8 bg-white text-black rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined fill-1">play_arrow</span>
+</button>
+<button class="size-8 bg-black/40 border border-white/40 text-white rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<p class="text-green-500 font-bold text-sm">98% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium">
+<span class="border border-white/40 px-1 rounded-sm uppercase">16+</span>
+<span>8 Seasons</span>
+<span class="border border-white/40 px-1 rounded-sm text-[8px]">HD</span>
+</div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Stranger Things</p>
+</div>
+<!-- Repeat for other cards -->
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Cinematic movie poster for The Crown" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5ov5h7tMA-QGv15R9ABTDmskVrIWaO4OyTwLhCKltfYXskRl0uN6ueMWZ_BtcjYTF59IgKBK-3yvGzP_e0LULvW1ztCaDbYucrpdmjm-yvsiO1Uq7dXUdLADGZmga7Gj_veEpEyc6D__fgLl_pt21ler4L5QUVtaNxLoT9FGByfOqOH5GXr_8_xuKoJsQNADKiZd_-ZOdi_UyGVtSFyGfKCQhtoJ-IlONOq5tRD4yrA4TG004L1a0x-FUsTnrhJgQIe5JZXyZBPgg');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">95% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">12+</span><span>6 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">The Crown</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Action fantasy movie poster for The Witcher" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAK_5HmIAP_9b0BgPaNKaCE6xHauB2Jrx_ezUky8R1b9djR4jXAF6yfjgNb2CXcbpPcSFtQh80N_sMLzX2yzXzo8L9NQk62voV_nUgezmxfk_-m58awB1Pjb2Ixo2dpUPm6Xi-U0Kcwhoc476uFgaWSnVTmVweKkJPmlUyY7DqabhvAxYpJb-K4d4ILpXHtfHVfrxsIYlYTXHXLLR_EUjJbdB5NtYXv9KJzIwNTtdc7CW3AZDnpQmHvPBiLhGJgYa3njRuP8vAdUhfz');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">92% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>3 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">The Witcher</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Futuristic sci-fi poster for Black Mirror" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCA6Iu5vljQs4xp72RnhZg7lQbXrQSVgxf-Ebhf60aJi4E_Aaym2Xc5Hu_yAJZjtqvTboB-ww00ugDHQIkIGiTsTPZ1yrxv7x4VqoCDueUcEe9_d-PL3_3DUwDBPH6vZztGiiodu8gCl7LSvJtGwVvQQJbtIyOaTOWHE2d6Khlw8dYyAXBy_QWhqlwHGXIbeCsz3EM8B0HqledbzFku9aU9bcIBMOSTE8kHijZ8p7KiwdM_26gup5SN3iqHggVfgJ1ncucwUiZinc5L');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">97% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>6 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Black Mirror</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Heist thriller movie poster for Money Heist" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBg-HNh5MWNxagUSZaEICDB9cwZemoTqyz7zv2ZqubuMweuPvX2V-UFAAm8OE_AeHjROvsV46KXrm5B4ju2J1NbUINOYlKm5iUwTZQL9kzSySTW_cBDYJuIuPR3LcC6qyaucX9GmS5H07ws3Z4wzP2C9OxVOxIoaAfWEThvwuJM5lEbmFJ5t-u6PSFA-yRrbQ_VkCh1Uot7E3kkEmGFCfMRC20xyNIqR4vsKYnLhYGZvRPmnZHhRYATbKlZYBu2PvNKrPj6YJ2ffYed');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">94% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">16+</span><span>5 Parts</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Money Heist</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dark time travel poster for Dark series" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAE_DO-qHEskOBB_P_Zc2rERNRiaLzM_FHFleOe27ewAsYAO3Ckl0TO8zOXpgZg9vIX5_3FdFL74FR-9KeFuNo3zuxbf6ZrO9vOvhWGyJUG_RQ3DeOerRCLELyYsKPIQL0ztT5xVO65Rmumw-XuF9yNhC194aAW-hePID-MXdPN8qrrh4of_d8q3LLF2NjmWVJ0xMs3vlv36EpdoiIHeLiXwXMwwodTu6f1MGkY4U4JhtLGyzuhifd_P3XdzBjqN41AzfwhVkdr1gun');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">91% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">16+</span><span>3 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Dark</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Crime drama movie poster for Ozark" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_PXrdSvmoWJgIXrVaBGY6QhgLWxo9hLGTCgpkAOwhAsdFnC5mwo7Sg1LxApJq7Wx2SPB45fTn-jK8aB9EnZ45FiWQoj-1MSrpyOTYYW2ZFZPUWVRUae2JlN1vZQDuIWS7KXbn2xTXi604D8Mh8VdEguXex2umOY4V8GdWarrh2dJp5VmZmmENgnsbeEfqYquxoGk3OZy8YJrYmRCsFkDhoG4wRagDSnk02v_0InbT794mPN62hzkVOZbnfjVsKfj8EaoPSHGrjblR');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">89% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>4 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Ozark</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Psychological thriller poster for Mindhunter" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDt2xitibx1a5wvPV_09ap3B0T1WAK5Vb1qQ2fPZAcvKPAnL-GR83MFm5UjNWffpBzqSpoDZ1nT8-Wa0T9qFH6l43Ofqp7c0dk_0kX8_gVwN2Km40GdL_RNeB2tlIvVjJS84nNKFMCCf9xGplvAwDZU2jSszQXk-tUotQ5MFKrcsZ7HEis0KV1ANoVjDv9D7qt-lzPlJQCPFHHQR4aWvgzf-jyc6IeSLmawqspXnS2fDkWzXszSU1pbJ71UArxJ0rEBG5RGacofvTK7');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">96% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>2 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Mindhunter</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Chess drama poster for The Queen's Gambit" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjcJlwhwMksDfoH-cEQs6MK8Y6pqbppxPRlvL9mraEW07D4Wa0BOsaiDmD5ACAU6S1mxAn1-k1doCQzbOt9HuNwcgRIA9JBXFLnNAuR8dquJgUkjh9EBcvnK_WsLRWLu8QXuoL-Bf5DirMmgQJSIwrAa9k-XnKCu7U6pxEEt1i0MgACBnlYpgU3XE0ANNNp-yDm0TUMTKnMzYHE5qAGeoahfExQjP40DlHDWa2VNPOCfT5JYAKMRVV2u8lFo2QXk7hQKY7j3HyhpdR');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">99% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">16+</span><span>Limited Series</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">The Queen's Gambit</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Violent survival drama poster for Squid Game" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtbOIICfmD1FhEkyJQworZyaypKv08uKigVdasRrIcptTg9HUzjh5QXWOsVY0chQsRlswr73W7yS_nM8NLkMPUTAFJ_hfK-nfzjkWZWYJdGLc6Xxo3GMQgLjmVyty3cM23l6fspBdI5qsomdU6OksApzK_GMVpCc-h0UCvlr4mzztzwXx9H_mL3Fq2-q9WVVttJ2e0rc9uheN071E1yPJH8yOT_mPqj45dfJyRsVfcxW7yqcKcPkykMfdIWKigzXRcqEWdQAvYtbun');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">93% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>1 Season</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Squid Game</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Drug trade drama poster for Narcos" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmuY0r_yF1hMijCFiEWocy3-TUWv4KjoHohyg7H2bPHiGsMLKGpP_O0vpLTtRIqV8s21SkVayHaY5skCTFMjvPkgHw-W_pk5Av_mWrO30octiOI3w1nB5CMheLwbBaxwZfaObR4F7o506h8Gr5Eabj8rp8nCUqxxFluN6n82b6FFRc1FXP2TV27jeSah3hqhb2wB-KXVUvwlXgudLM-x2_JIdr6O2iOc6b2hGCB7g0oNjRfDQggzbEVS6Nsuaql9LxQuoCgd62YKQm');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">90% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">18+</span><span>3 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">Narcos</p>
+</div>
+<div class="group relative flex flex-col gap-2 transition-all duration-300 poster-hover-zoom">
+<div class="relative aspect-[2/3] w-full bg-card-dark rounded-lg overflow-hidden shadow-xl ring-1 ring-white/5">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Animated dark comedy poster for BoJack Horseman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBoknM0U-hL9pkACNeeChD4_Wx3pFn1tLBb_cfq0K9XlOcWXd-X2dHTw1_aAJIDWnnZ3-GN-g29PJb-5kHdQ-j5-P1YKP6oSUxxol8eGvRatUL-U-wrgvORR36Cbi9ifGnJgMoHrcaX5bwtbM8a0zwaCMvI0M1jIfP_vA1PszhEW3c9cD68igCRLjFDdjdFfOL3u0S-n9LY7Mwe5V2iZ3EXHQ2EcOQAgh5Z6aJkC7x65TE_otdPTL9dFXPXNN3y4hoW81og9Bl5W46t');"></div>
+<button class="absolute top-2 right-2 z-20 size-8 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm">close</span></button>
+<div class="absolute inset-0 glass-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+<p class="text-green-500 font-bold text-sm">88% Match</p>
+<div class="flex items-center gap-2 text-[10px] text-white/80 font-medium"><span class="border border-white/40 px-1 rounded-sm uppercase">16+</span><span>6 Seasons</span></div>
+</div>
+</div>
+<p class="text-white text-sm font-medium truncate px-1">BoJack Horseman</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 px-4 md:px-12 py-10 bg-black/40 text-slate-500">
+<div class="max-w-4xl mx-auto flex flex-col gap-8">
+<div class="flex gap-6 mb-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">social_leaderboard</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">camera_alt</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">video_library</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">mail</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+<div class="flex flex-col gap-3">
+<a class="hover:underline" href="#">Audio Description</a>
+<a class="hover:underline" href="#">Investor Relations</a>
+<a class="hover:underline" href="#">Legal Notices</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="hover:underline" href="#">Help Center</a>
+<a class="hover:underline" href="#">Jobs</a>
+<a class="hover:underline" href="#">Cookie Preferences</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="hover:underline" href="#">Gift Cards</a>
+<a class="hover:underline" href="#">Terms of Use</a>
+<a class="hover:underline" href="#">Corporate Information</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="hover:underline" href="#">Media Center</a>
+<a class="hover:underline" href="#">Privacy</a>
+<a class="hover:underline" href="#">Contact Us</a>
+</div>
+</div>
+<div class="pt-6 border-t border-slate-800">
+<button class="border border-slate-600 px-2 py-1 text-[10px] hover:text-white transition-colors">Service Code</button>
+<p class="mt-4 text-[10px]">© 1997-2024 Netflix, Inc. Variant 1 of 2</p>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

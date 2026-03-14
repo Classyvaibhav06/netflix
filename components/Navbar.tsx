@@ -175,39 +175,25 @@ export default function Navbar() {
             </button>
 
             {isMenuOpen && (
-              <div className="absolute top-[52px] right-0 w-[220px] bg-black/[0.93] border border-gray-700/50 rounded-sm py-0 shadow-2xl animate-fade-in">
+              <div className="absolute top-[52px] right-0 w-[220px] bg-black/[0.93] border border-gray-700/50 rounded-sm py-0 shadow-2xl animate-fade-in z-[110]">
                 {/* Arrow */}
-                <div className="absolute -top-[7px] right-6 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[7px] border-b-white" />
+                <div className="absolute -top-[7px] right-6 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[7px] border-b-white/90" />
                 
                 {/* Profile section */}
                 <div className="py-3 border-b border-gray-700/50">
-                  <div className="flex items-center gap-3 px-3 py-2 hover:underline cursor-pointer transition">
-                    <div className="w-8 h-8 rounded overflow-hidden bg-[#E50914] shrink-0">
-                      {session?.user?.image ? (
-                        <img
-                          src={session.user.image}
-                          alt={session.user.name || "Profile"}
-                          className="w-full h-full object-cover"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-sm font-bold text-white">
-                          {session?.user?.name?.[0]?.toUpperCase() || "U"}
-                        </div>
-                      )}
+                  <Link href="/profiles" className="flex items-center gap-3 px-3 py-2 hover:underline cursor-pointer transition group">
+                    <div className="w-8 h-8 rounded bg-blue-500 overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
+                       <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Profile" className="w-full h-full object-cover" />
                     </div>
-                    <span className="text-[13px] text-white">{session?.user?.name || "User"}</span>
-                  </div>
+                    <span className="text-[13px] text-white">Vaibhav</span>
+                  </Link>
                 </div>
 
                 {/* Menu items */}
                 <div className="py-3 border-b border-gray-700/50">
-                  <button className="w-full text-left px-3 py-1.5 text-[13px] text-[#b3b3b3] hover:text-white hover:underline transition">
+                  <Link href="/profiles" className="block w-full text-left px-3 py-1.5 text-[13px] text-[#b3b3b3] hover:text-white hover:underline transition">
                     Manage Profiles
-                  </button>
-                  <button className="w-full text-left px-3 py-1.5 text-[13px] text-[#b3b3b3] hover:text-white hover:underline transition">
-                    Transfer Profile
-                  </button>
+                  </Link>
                   <button className="w-full text-left px-3 py-1.5 text-[13px] text-[#b3b3b3] hover:text-white hover:underline transition">
                     Account
                   </button>

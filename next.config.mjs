@@ -26,6 +26,21 @@ const nextConfig = {
         hostname: "lh3.googleusercontent.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "wallpapers.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mir-s3-cdn-cf.behance.net",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -10,9 +10,11 @@ interface MovieCardProps {
   onOpenModal: (movie: any) => void
   isPoster?: boolean
   rank?: number
+  showRemove?: boolean
+  onRemove?: (movieId: string) => void
 }
 
-export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }: MovieCardProps) {
+export default function MovieCard({ movie, onOpenModal, isPoster = false, rank, showRemove, onRemove }: MovieCardProps) {
   const router = useRouter()
   const [inList, setInList] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -31,6 +33,18 @@ export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }
     })
     if (res.ok) {
       setInList(!inList)
+    }
+  }
+
+  const handleRemove = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const res = await fetch("/api/watchlist", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ movieId: movie._id }),
+    })
+    if (res.ok && onRemove) {
+      onRemove(movie._id)
     }
   }
 
@@ -79,12 +93,12 @@ export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }
     // Netflix Originals tall poster card
     return (
       <div
-        className="relative min-w-[130px] md:min-w-[200px] cursor-pointer group shrink-0"
+        className="relative min-w-[130px] md:min-w-[200px] cursor-pointer group shrink-0 poster-hover-zoom"
         onClick={() => onOpenModal(movie)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="relative aspect-[2/3] w-full rounded-[4px] overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-lg bg-[#1a1a1a]">
+        <div className="relative aspect-[2/3] w-full rounded-[4px] overflow-hidden shadow-lg bg-[#1a1a1a]">
           {!imageLoaded && <div className="absolute inset-0 shimmer" />}
           <Image
             src={posterUrl}
@@ -94,7 +108,47 @@ export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }
             onLoad={() => setImageLoaded(true)}
             sizes="(max-width: 768px) 130px, 200px"
           />
+
+          {/* Stitch Remove Icon */}
+          {showRemove && (
+            <button 
+              onClick={handleRemove}
+              className="absolute top-2 right-2 z-20 w-8 h-8 md:w-9 md:h-9 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-colors border border-white/20"
+            >
+              <Plus className="w-4 h-4 rotate-45" />
+            </button>
+          )}
+
+          {/* Stitch Glass Overlay */}
+          <div className="glass-overlay p-3 flex flex-col justify-end gap-2 group-hover:opacity-100">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  router.push(`/movie/${movie._id}`)
+                }}
+                className="w-8 h-8 rounded-full bg-white flex items-center justify-center"
+              >
+                <Play className="w-4 h-4 text-black fill-black ml-1" />
+              </button>
+              <button 
+                onClick={handleToggleList}
+                className="w-8 h-8 rounded-full bg-black/40 border border-white/40 flex items-center justify-center"
+              >
+                {inList ? <Check className="w-4 h-4 text-white" /> : <Plus className="w-4 h-4 text-white" />}
+              </button>
+            </div>
+            <p className="text-[#46d369] font-bold text-sm">{matchPercent}% Match</p>
+            <div className="flex items-center gap-2 text-[10px] text-white/80 font-medium font-display">
+              <span className="border border-white/40 px-1 rounded-sm uppercase">{movie.maturityRating}</span>
+              <span>{movie.duration}</span>
+              <span className="border border-white/40 px-1 rounded-sm text-[8px]">HD</span>
+            </div>
+          </div>
         </div>
+        <p className="text-white text-sm font-medium truncate mt-2 px-1 opacity-0 md:group-hover:opacity-100 transition-opacity">
+          {movie.title}
+        </p>
       </div>
     )
   }
