@@ -11,10 +11,10 @@ export const authConfig = {
       const isAuthRoute = nextUrl.pathname.startsWith("/sign-in") || nextUrl.pathname.startsWith("/sign-up")
       const isPublicRoute = nextUrl.pathname === "/" || isAuthRoute
 
-      // Redirect authenticated users away from auth pages
-      if (isAuthRoute) {
+      // Redirect authenticated users away from landing page or auth pages
+      if (nextUrl.pathname === "/" || isAuthRoute) {
         if (isLoggedIn) {
-          return Response.redirect(new URL("/browse", nextUrl))
+          return Response.redirect(new URL("/home", nextUrl))
         }
         return true
       }

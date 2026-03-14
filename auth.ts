@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import Credentials from "next-auth/providers/credentials"
+import Google from "next-auth/providers/google"
 import clientPromise from "./lib/mongodb-client"
 import { getUserByEmail } from "./lib/user"
 import bcrypt from "bcryptjs"
@@ -11,6 +12,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt" },
   providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
     Credentials({
       credentials: {
         email: { label: "Email", type: "email" },
@@ -30,9 +36,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     })
   ],
   callbacks: {
+    async jwt({ token, user, profile }) {
+      if (user) {
+        token.id = user.id
+      }
+      if (profile?.picture) {
+        token.picture = profile.picture
+      }
+      return token
+    },
     async session({ session, token }) {
       if (token.sub) {
         session.user.id = token.sub
+      }
+      if (token.picture) {
+        session.user.image = token.picture as string
       }
       return session
     },

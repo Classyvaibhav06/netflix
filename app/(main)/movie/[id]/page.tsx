@@ -2,13 +2,20 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { Play, Plus, Check, ThumbsUp, Share2, ArrowLeft } from "lucide-react"
+import { Play, Plus, Check, ThumbsUp, Share2, ArrowLeft, X } from "lucide-react"
 import { useRouter } from "next/navigation"
+
+function getYouTubeId(url: string): string | null {
+  if (!url) return null
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  return match ? match[1] : null
+}
 
 export default function MovieDetail({ params }: { params: { id: string } }) {
   const [movie, setMovie] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [inList, setInList] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -50,31 +57,52 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
   }
 
   const matchPercent = 85 + Math.floor((movie.title?.charCodeAt(0) || 0) % 15)
+  const youtubeId = getYouTubeId(movie.trailerUrl)
 
   return (
     <div className="min-h-screen bg-[#141414] pb-20">
-      {/* Hero backdrop */}
+      {/* Hero backdrop / Trailer player */}
       <div className="relative h-[55vh] md:h-[65vh] w-full">
-        <Image
-          src={`https://image.tmdb.org/t/p/original${movie.backdropPath}`}
-          alt={movie.title}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/30 to-black/30" />
-        <div className="absolute inset-0 gradient-hero-left" />
+        {isPlaying && youtubeId ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden z-10">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3`}
+              title={`${movie.title} Trailer`}
+              className="absolute inset-0 w-full h-[150%] -top-[25%] pointer-events-none fade-in"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+          </div>
+        ) : (
+          <>
+            <Image
+              src={`https://image.tmdb.org/t/p/original${movie.backdropPath}`}
+              alt={movie.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </>
+        )}
+
+        <div className={`absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/30 to-black/30 pointer-events-none ${isPlaying ? "opacity-0" : ""}`} />
+        <div className={`absolute inset-0 gradient-hero-left pointer-events-none ${isPlaying ? "opacity-0" : ""}`} />
 
         {/* Back button */}
         <button
-          onClick={() => router.back()}
+          onClick={() => {
+            if (isPlaying) {
+              setIsPlaying(false)
+            } else {
+              router.back()
+            }
+          }}
           className="absolute top-20 md:top-24 left-4 md:left-[60px] z-20 circle-btn w-10 h-10"
         >
-          <ArrowLeft className="w-5 h-5 text-white" />
+          {isPlaying ? <X className="w-5 h-5 text-white" /> : <ArrowLeft className="w-5 h-5 text-white" />}
         </button>
 
         {/* Content over backdrop */}
-        <div className="absolute bottom-[10%] left-4 md:left-[60px] z-10 w-[90%] md:w-[50%] lg:w-[40%]">
+        <div className={`absolute bottom-[10%] left-4 md:left-[60px] z-10 w-[90%] md:w-[50%] lg:w-[40%] transition-opacity duration-300 ${isPlaying ? "opacity-0 pointer-events-none" : ""}`}>
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[#E50914] font-bold text-xl tracking-[0.15em]">N</span>
             <span className="text-[#999] text-[11px] font-semibold tracking-[0.3em] uppercase">F I L M</span>
@@ -84,7 +112,13 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
           </h1>
           <div className="flex items-center gap-3 flex-wrap mb-4">
             <button
-              onClick={() => movie.trailerUrl && window.open(movie.trailerUrl, "_blank")}
+              onClick={() => {
+                if (youtubeId) {
+                  setIsPlaying(true)
+                } else if (movie.trailerUrl) {
+                  window.open(movie.trailerUrl, "_blank")
+                }
+              }}
               className="btn-play px-6 md:px-8 py-2 md:py-3 text-sm md:text-lg"
             >
               <Play className="w-6 h-6 fill-black" />

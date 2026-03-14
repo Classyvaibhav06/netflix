@@ -5,7 +5,7 @@ import HeroBanner from "@/components/HeroBanner"
 import MovieRow from "@/components/MovieRow"
 import MovieModal from "@/components/MovieModal"
 
-export default function Browse() {
+export default function Languages() {
   const [movies, setMovies] = useState<any[]>([])
   const [watchlist, setWatchlist] = useState<any[]>([])
   const [selectedMovie, setSelectedMovie] = useState<any | null>(null)

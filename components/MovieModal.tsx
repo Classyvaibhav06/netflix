@@ -4,10 +4,17 @@ import { X, Play, Plus, Check, ThumbsUp, Volume2, VolumeX } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 
+function getYouTubeId(url: string): string | null {
+  if (!url) return null
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  return match ? match[1] : null
+}
+
 export default function MovieModal({ movie, onClose }: { movie: any; onClose: () => void }) {
   const [inList, setInList] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
+  const [isMuted, setIsMuted] = useState(false) // Audio ON by default
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false) // Wait for timeout
 
   useEffect(() => {
     document.body.style.overflow = "hidden"
@@ -21,7 +28,16 @@ export default function MovieModal({ movie, onClose }: { movie: any; onClose: ()
       if (e.key === "Escape") onClose()
     }
     window.addEventListener("keydown", handleEsc)
-    return () => window.removeEventListener("keydown", handleEsc)
+    
+    // Auto-play after 2 seconds
+    const timer = setTimeout(() => {
+      setIsPlaying(true)
+    }, 2000)
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc)
+      clearTimeout(timer)
+    }
   }, [onClose])
 
   if (!movie) return null
@@ -37,6 +53,7 @@ export default function MovieModal({ movie, onClose }: { movie: any; onClose: ()
 
   const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdropPath}`
   const matchPercent = 85 + Math.floor((movie.title?.charCodeAt(0) || 0) % 15)
+  const youtubeId = getYouTubeId(movie.trailerUrl)
 
   return (
     <div className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto pt-8 pb-12">
@@ -55,21 +72,34 @@ export default function MovieModal({ movie, onClose }: { movie: any; onClose: ()
 
         {/* Hero Section */}
         <div className="relative aspect-video w-full">
-          {!imageLoaded && <div className="absolute inset-0 shimmer" />}
-          <Image
-            src={backdropUrl}
-            alt={movie.title}
-            fill
-            className={`object-cover transition-opacity duration-500 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-            onLoad={() => setImageLoaded(true)}
-            sizes="900px"
-          />
+          {isPlaying && youtubeId ? (
+            <div className="absolute inset-0 w-full h-full overflow-hidden z-10">
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3&start=6`}
+                title={`${movie.title} Trailer`}
+                className="absolute inset-0 w-full h-[150%] -top-[25%] pointer-events-none fade-in"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              />
+            </div>
+          ) : (
+            <>
+              {!imageLoaded && <div className="absolute inset-0 shimmer" />}
+              <Image
+                src={backdropUrl}
+                alt={movie.title}
+                fill
+                className={`object-cover transition-opacity duration-500 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                onLoad={() => setImageLoaded(true)}
+                sizes="900px"
+              />
+            </>
+          )}
 
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-[#181818]/20 to-transparent" />
+          <div className={`absolute inset-0 bg-gradient-to-t from-[#181818] via-[#181818]/20 to-transparent z-20 pointer-events-none ${isPlaying ? "opacity-0" : ""}`} />
 
           {/* Content over the hero */}
-          <div className="absolute bottom-8 left-8 right-8 md:left-12 md:right-12 z-20">
+          <div className={`absolute bottom-8 left-8 right-8 md:left-12 md:right-12 z-20 transition-opacity duration-300 ${isPlaying ? "opacity-0 pointer-events-none" : ""}`}>
             {/* Netflix badge */}
             <div className="flex items-center gap-2 mb-3">
               <span className="text-[#E50914] font-bold text-xl tracking-[0.15em]">N</span>
@@ -83,7 +113,13 @@ export default function MovieModal({ movie, onClose }: { movie: any; onClose: ()
             <div className="flex items-center gap-3 flex-wrap">
               {/* Play button */}
               <button
-                onClick={() => movie.trailerUrl && window.open(movie.trailerUrl, "_blank")}
+                onClick={() => {
+                  if (youtubeId) {
+                    setIsPlaying(true)
+                  } else if (movie.trailerUrl) {
+                    window.open(movie.trailerUrl, "_blank")
+                  }
+                }}
                 className="btn-play px-6 md:px-8 py-2 md:py-2.5 text-base md:text-lg"
               >
                 <Play className="w-6 h-6 fill-black" />
@@ -121,6 +157,17 @@ export default function MovieModal({ movie, onClose }: { movie: any; onClose: ()
 
         {/* Details Section */}
         <div className="px-8 md:px-12 pb-10">
+          {/* Stop trailer button - show only when playing */}
+          {isPlaying && (
+            <button
+              onClick={() => setIsPlaying(false)}
+              className="mb-4 flex items-center gap-2 text-sm text-[#b3b3b3] hover:text-white transition"
+            >
+              <X className="w-4 h-4" />
+              Stop Trailer
+            </button>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-6 md:gap-10 pt-2">
             {/* Left Column - Meta + Description */}
             <div>

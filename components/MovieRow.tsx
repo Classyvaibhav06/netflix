@@ -48,7 +48,7 @@ export default function MovieRow({ title, movies, onOpenModal, isPoster = false,
 
   return (
     <div
-      className="relative space-y-1 md:space-y-2 z-20 group/row"
+      className={`relative space-y-1 md:space-y-2 group/row transition-all duration-300 ${isHovering ? "z-[60]" : "z-20"}`}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -78,7 +78,7 @@ export default function MovieRow({ title, movies, onOpenModal, isPoster = false,
         {/* Scrollable Movie Cards */}
         <div
           ref={rowRef}
-          className="flex items-stretch gap-1 md:gap-1.5 overflow-x-scroll scrollbar-hide px-4 md:px-[60px] py-4 -my-2"
+          className="flex items-stretch gap-3 md:gap-4 overflow-x-scroll scrollbar-hide px-4 md:px-[60px] pt-6 pb-32 -mb-28 -mt-4"
           style={{ scrollSnapType: "x mandatory" }}
         >
           {isTop10

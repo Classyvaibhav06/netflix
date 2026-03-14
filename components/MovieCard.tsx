@@ -107,7 +107,7 @@ export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }
       onMouseLeave={handleMouseLeave}
       onClick={() => onOpenModal(movie)}
     >
-      <div className="relative aspect-video w-full rounded-[4px] overflow-hidden bg-[#1a1a1a] transition-all duration-300 group-hover:rounded-b-none group-hover:scale-x-105 group-hover:scale-y-105 group-hover:z-50 group-hover:shadow-[0_0_26px_6px_rgba(0,0,0,0.8)]">
+      <div className="relative aspect-video w-full rounded-[4px] overflow-hidden bg-[#1a1a1a] transition-all duration-300 group-hover:rounded-b-none group-hover:scale-105 group-hover:z-50 group-hover:shadow-[0_-5px_26px_6px_rgba(0,0,0,0.8)]">
         {!imageLoaded && <div className="absolute inset-0 shimmer" />}
         <Image
           src={backdropUrl}
@@ -121,11 +121,12 @@ export default function MovieCard({ movie, onOpenModal, isPoster = false, rank }
 
       {/* Hover expanded info panel (Netflix-style dropdown under card) */}
       <div
-        className={`absolute top-full left-0 right-0 bg-[#181818] rounded-b-md shadow-[0_10px_26px_6px_rgba(0,0,0,0.8)] z-50 transform origin-top transition-all duration-300 ${
+        className={`absolute top-full left-0 right-0 bg-[#181818] rounded-b-md shadow-[0_10px_26px_6px_rgba(0,0,0,0.8)] z-50 transform origin-top transition-all duration-300 group-hover:scale-105 ${
           isHovered ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="p-3 pt-2.5">
+        {/* We counter-scale the content slightly so text doesn't look stretched */}
+        <div className="p-3 pt-2.5 transition-transform duration-300 group-hover:scale-[0.952]">
           {/* Action buttons row */}
           <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-1.5">

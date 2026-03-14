@@ -4,10 +4,17 @@ import Image from "next/image"
 import { Play, Info, Volume2, VolumeX } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
+function getYouTubeId(url: string): string | null {
+  if (!url) return null
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  return match ? match[1] : null
+}
+
 export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenModal?: (movie: any) => void }) {
   const [imageLoaded, setImageLoaded] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
+  const [isMuted, setIsMuted] = useState(false)
   const [showContent, setShowContent] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const mountedRef = useRef(true)
 
   useEffect(() => {
@@ -25,23 +32,41 @@ export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenM
   if (!movie) return null
 
   const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdropPath}`
+  const youtubeId = getYouTubeId(movie.trailerUrl)
 
   return (
-    <div className="relative h-[56.25vw] min-h-[450px] max-h-[90vh] w-full">
-      {/* Background Image */}
+    <div 
+      className="relative h-[56.25vw] min-h-[450px] max-h-[90vh] w-full overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Background Media */}
       <div className="absolute inset-0 w-full h-full">
-        {!imageLoaded && (
-          <div className="absolute inset-0 shimmer" />
+        {youtubeId && isHovered ? (
+          <div className="absolute inset-0 w-full h-[150%] -top-[25%] pointer-events-none fade-in">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3`}
+              title={`${movie.title} Trailer`}
+              className="w-full h-full pointer-events-none"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+          </div>
+        ) : (
+          <>
+            {!imageLoaded && (
+              <div className="absolute inset-0 shimmer" />
+            )}
+            <Image
+              src={backdropUrl}
+              alt={movie.title}
+              fill
+              priority
+              className={`object-cover transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+              onLoad={() => setImageLoaded(true)}
+              sizes="100vw"
+            />
+          </>
         )}
-        <Image
-          src={backdropUrl}
-          alt={movie.title}
-          fill
-          priority
-          className={`object-cover transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-          onLoad={() => setImageLoaded(true)}
-          sizes="100vw"
-        />
 
         {/* Gradient overlays - exactly like Netflix */}
         <div className="absolute inset-0 gradient-hero-left" />

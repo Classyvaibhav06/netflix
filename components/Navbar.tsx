@@ -6,12 +6,12 @@ import { Search, Bell, ChevronDown, LogOut, X } from "lucide-react"
 import { signOut, useSession } from "next-auth/react"
 
 const NAV_LINKS = [
-  { label: "Home", href: "/browse" },
-  { label: "TV Shows", href: "/browse" },
-  { label: "Movies", href: "/browse" },
-  { label: "New & Popular", href: "/browse" },
+  { label: "Home", href: "/home" },
+  { label: "TV Shows", href: "/tv" },
+  { label: "Movies", href: "/movies" },
+  { label: "New & Popular", href: "/new" },
   { label: "My List", href: "/my-list" },
-  { label: "Browse by Languages", href: "/browse" },
+  { label: "Browse by Languages", href: "/languages" },
 ]
 
 const PROFILE_AVATARS = [
@@ -63,7 +63,7 @@ export default function Navbar() {
       <div className="flex items-center justify-between px-4 md:px-[60px] h-[41px] md:h-[68px]">
         {/* Left Section */}
         <div className="flex items-center gap-5 lg:gap-10">
-          <Link href="/browse" className="shrink-0">
+          <Link href="/home" className="shrink-0">
             <img
               src="/assets/logo.png"
               alt="Netflix"
@@ -154,9 +154,18 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <div className="w-8 h-8 rounded overflow-hidden bg-[#E50914]">
-                <div className="w-full h-full flex items-center justify-center text-sm font-bold text-white">
-                  {session?.user?.name?.[0]?.toUpperCase() || "U"}
-                </div>
+                {session?.user?.image ? (
+                  <img
+                    src={session.user.image}
+                    alt={session.user.name || "Profile"}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-sm font-bold text-white">
+                    {session?.user?.name?.[0]?.toUpperCase() || "U"}
+                  </div>
+                )}
               </div>
               <ChevronDown
                 className={`w-4 h-4 text-white transition-transform duration-200 hidden md:block ${
@@ -173,8 +182,19 @@ export default function Navbar() {
                 {/* Profile section */}
                 <div className="py-3 border-b border-gray-700/50">
                   <div className="flex items-center gap-3 px-3 py-2 hover:underline cursor-pointer transition">
-                    <div className="w-8 h-8 rounded bg-[#E50914] flex items-center justify-center text-sm font-bold shrink-0">
-                      {session?.user?.name?.[0]?.toUpperCase() || "U"}
+                    <div className="w-8 h-8 rounded overflow-hidden bg-[#E50914] shrink-0">
+                      {session?.user?.image ? (
+                        <img
+                          src={session.user.image}
+                          alt={session.user.name || "Profile"}
+                          className="w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-sm font-bold text-white">
+                          {session?.user?.name?.[0]?.toUpperCase() || "U"}
+                        </div>
+                      )}
                     </div>
                     <span className="text-[13px] text-white">{session?.user?.name || "User"}</span>
                   </div>
