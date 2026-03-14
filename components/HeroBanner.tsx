@@ -15,6 +15,8 @@ export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenM
   const [isMuted, setIsMuted] = useState(false)
   const [showContent, setShowContent] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [isActuallyPlaying, setIsActuallyPlaying] = useState(false)
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null)
   const mountedRef = useRef(true)
 
   useEffect(() => {
@@ -26,8 +28,23 @@ export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenM
     return () => {
       mountedRef.current = false
       clearTimeout(timer)
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    if (isHovered) {
+      hoverTimerRef.current = setTimeout(() => {
+        setIsActuallyPlaying(true)
+      }, 2000)
+    } else {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+      setIsActuallyPlaying(false)
+    }
+    return () => {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+    }
+  }, [isHovered])
 
   if (!movie) return null
 
@@ -42,10 +59,10 @@ export default function HeroBanner({ movie, onOpenModal }: { movie: any; onOpenM
     >
       {/* Background Media */}
       <div className="absolute inset-0 w-full h-full">
-        {youtubeId && isHovered ? (
+        {youtubeId && isActuallyPlaying ? (
           <div className="absolute inset-0 w-full h-[150%] -top-[25%] pointer-events-none fade-in">
             <iframe
-              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3`}
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3&start=6`}
               title={`${movie.title} Trailer`}
               className="w-full h-full pointer-events-none"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
